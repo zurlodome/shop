@@ -24,7 +24,6 @@ namespace vega.Controllers.Resources
 
         public VehicleResource()
         {
-            
             Features = new Collection<KeyValuePairResource>();
         }
 
