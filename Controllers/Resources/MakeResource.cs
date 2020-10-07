@@ -11,6 +11,7 @@ namespace vega.Controllers.Resources
         public MakeResource()
         {
             Models = new Collection<KeyValuePairResource>();
+            
         }
     }
 }
