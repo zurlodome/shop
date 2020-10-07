@@ -26,7 +26,7 @@ export default createServerRenderer(params => {
             appRef.isStable.first(isStable => isStable).subscribe(() => {
                 // Because 'onStable' fires before 'onError', we have to delay slightly before
                 // completing the request in case there's an error to report
-                setImmediate(() => {
+                (<any>window).setImmediate(() => {
                     resolve({
                         html: state.renderToString()
                     });

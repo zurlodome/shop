@@ -13,6 +13,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Diagnostics;
 using System.IO;
+using vega.Core;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace vega
 {
@@ -33,11 +35,27 @@ namespace vega
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddAutoMapper();
 
             services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("test")));
 
             services.AddMvc();
+
+
+            // 1. Add Authentication Services
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://firstvegaproject.eu.auth0.com/";
+                options.Audience = "https://api.firstvega.com";
+            });
+
 
             services.Configure<IISOptions>(options =>
             {
@@ -77,7 +95,7 @@ namespace vega
                         // the client.
                         string err = exceptionHandlerPathFeature.Error.StackTrace;
                         string errMsg = exceptionHandlerPathFeature.Error.Message;
-                        await context.Response.WriteAsync("File error"+ err + errMsg + "!<br><br>\r\n");
+                        await context.Response.WriteAsync("File error" + err + errMsg + "!<br><br>\r\n");
                         if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
                         {
                             await context.Response.WriteAsync("File error thrown!<br><br>\r\n");
@@ -92,6 +110,9 @@ namespace vega
             }
 
             app.UseStaticFiles();
+
+            // 2. Enable authentication middleware
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

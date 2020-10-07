@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace vega.Models
+namespace vega.Core.Models
 {
     [Table("Vehicles")]
     public class Vehicle
@@ -31,11 +31,11 @@ namespace vega.Models
 
         public DateTime LastUpdate { get; set; }
 
-        public ICollection<VehicleFeature> Feature { get; set; }
+        public ICollection<VehicleFeature> Features { get; set; }
 
         public Vehicle()
         {   
-            Feature = new Collection<VehicleFeature>();
+            Features = new Collection<VehicleFeature>();
         }
     }
 }

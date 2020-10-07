@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using vega.Controllers.Resources;
-using vega.Models;
+using vega.Core.Models;
 using vega.Persistence;
 
 namespace vega.Controllers
