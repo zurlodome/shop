@@ -82,7 +82,7 @@ namespace vega.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
             //var vehicle = await context.Vehicles.FindAsync(id);
@@ -112,13 +112,13 @@ namespace vega.Controllers
             return Ok(vehicleResource);
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<VehicleResource>> GetVehicles()
-        {
-            var vehicles = await repository.GetVehicles();
+    [HttpGet]
+    public async Task<QueryResultResource<VehicleResource>> GetVehicles(VehicleQueryResource filterResource)
+    {
+      var filter = mapper.Map<VehicleQueryResource, VehicleQuery>(filterResource);
+      var queryResult = await repository.GetVehicles(filter);
 
-            return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
-        }
-
+      return mapper.Map<QueryResult<Vehicle>, QueryResultResource<VehicleResource>>(queryResult);
     }
+  }
 }

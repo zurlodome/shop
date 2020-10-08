@@ -16,6 +16,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { AppErrorHandler } from './app.error-handler';
 import { AuthService } from './services/auth.service';
+import { PaginationComponent } from './components/shared/pagination.component';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -26,7 +27,8 @@ import { AuthService } from './services/auth.service';
         FetchDataComponent,
         HomeComponent,
         VehicleFormComponent,
-        VehicleListComponent
+        VehicleListComponent,
+        PaginationComponent,
     ],
     imports: [
         CommonModule,
